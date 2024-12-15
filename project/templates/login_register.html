@@ -1,8 +1,8 @@
 {% extends 'layout.html' %} 
 {% block content %} 
+{% block title %}Login Register{% endblock %}
 
 {% if page == 'login' %}
-<title>Login</title>
 <div>
   <form method="POST" action="">
     {% csrf_token %}
@@ -21,7 +21,6 @@
 </div>
 
 {% else %}
-<title>Register</title>
 <div>
   <form method="POST" action="">
     {% csrf_token %} 

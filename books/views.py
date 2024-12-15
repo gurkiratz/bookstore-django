@@ -4,9 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from .forms import BookForm
 from .models import Book
+from .serializers import BookSerializer
 
 # Create your views here.
 
@@ -148,3 +152,33 @@ def delete_book(request, book_id):
         return redirect("homepage")
 
     return render(request, "delete_book.html", {"book": book})
+
+
+# Get API routes
+@api_view(["GET"])
+def get_routes(request):
+    routes = [
+        "GET /api/books/",  # Get list of books
+        "GET /api/books/<id>/",  # Get book by ID
+    ]
+    return Response(routes)
+
+
+# Get all books
+@api_view(["GET"])
+def get_books(request):
+    books = Book.objects.all()
+    serializer = BookSerializer(books, many=True)
+    return Response(serializer.data)
+
+
+# Get book by ID
+@api_view(["GET"])
+def get_book(request, book_id):
+    try:
+        book = Book.objects.get(id=book_id)
+    except Book.DoesNotExist:
+        return Response({"message": "Book not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = BookSerializer(book)
+    return Response(serializer.data)

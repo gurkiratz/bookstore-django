@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-fn4rhr(5yz(jt2-^k(s0)9c@b@imhi&yvyp@d-0)z+sp+-8djx
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["herring-blessed-kit.ngrok-free.app"]
+ALLOWED_HOSTS = ["herring-blessed-kit.ngrok-free.app", "127.0.0.1:8000"]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://herring-blessed-kit.ngrok-free.app",
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
     "books",
 ]
 
